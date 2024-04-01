@@ -1,11 +1,26 @@
 
 
-all: chacha20
+all: server/build compile_server client/build compile_client
 
-chacha20:
-	gcc chacha20.c -o chacha -g 
+server/build:
+	cmake -B server/build -S server/
 
-gdb:
-	gdb chacha
+rserver:
+	./server/build/server
 
-.PHONY: gdb
+compile_server:
+	make -C server/build
+
+client/build:
+	cmake -B client/build -S client/
+
+rclient:
+	./client/build/client
+
+compile_client:
+	make -C client/build
+
+clean:
+	rm -rf server/build client/build
+
+.PHONY: compile_server clean rserver compile_client rclient
